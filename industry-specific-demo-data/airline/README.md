@@ -73,6 +73,8 @@ After deployment:
    - "I cannot make the flight with booking reference number AYT7AZ, can you please log a support ticket for someone to call me as I would like to discuss cancellation and refund policy."
    - "What's your baggage policy?"
    - "Can i fly with my guide dog on the flight?"
+   - "What's the status of flight ZZ6 departing today?"
+   - "What are good destinations from London Heathrow?"
 
 ## Customization
 

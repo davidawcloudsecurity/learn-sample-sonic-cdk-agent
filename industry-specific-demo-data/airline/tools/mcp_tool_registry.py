@@ -22,6 +22,9 @@ from . import user_profile_by_booking_reference
 from . import user_profile_by_ffn
 from . import create_support_ticket
 from . import request_for_special_meal
+from . import flifo
+from . import air_shopping
+from datetime import date
 
 logger = logging.getLogger(__name__)
 
@@ -113,6 +116,48 @@ async def request_for_special_meal_tool(
     except Exception as e:
         logger.error(f"Error locating records with provided booking reference: {str(e)}", exc_info=True)
         return {"status": "error", "error": str(e)}
+
+
+
+
+# Air inspiration shopping
+@mcp_server.tool(
+    name="getAirDestinationsAndRespectiveCheapestPrices",
+    description="Use this tool when a user asks for inspirational destinations. Insist on the fact that prices vary and users need to look for detailed flight options next."
+)
+async def get_air_destinations_and_respective_cheapest_prices(
+   origin_airport: Annotated[Union[str], Field(description="Origin IATA airport code where the customer will be departing from. Always use an IATA airport code.")]    
+) -> dict:
+    """Provides an array of available destinations and respective cheapest price per roundtrip passenger from an origin airport."""
+    try:
+        logger.info(f"get_air_destinations_and_respective_cheapest_prices({origin_airport})")
+        results = air_shopping.get_air_destinations_and_respective_cheapest_prices(origin_airport)
+        logger.info(f"get_air_destinations_and_respective_cheapest_prices({origin_airport})={results}")
+        return {"status": "success", "results": results}
+    except Exception as e:
+        logger.error(f"Error: get_air_destinations_and_respective_cheapest_prices()", exc_info=True)
+        return {"status": "error", "error": str(e)}
+
+# Flight status
+@mcp_server.tool(
+    name="getAirlineFlightDateStatus",
+    description="Use this tool when a user asks about flight status. Remind the user of the departure date and flight number before answering the question, and specifically highlight a delay on arrival if any."
+)
+async def get_airline_flight_date_status(
+   flight_number: Annotated[Union[str], Field(description="Flight number the customer asked for")],
+   departure_date: Annotated[Union[date], Field(description="Departure date of the flight the customer asked about. If the customer asks about today or tomorrow, convert it to the right format before calling the tool.")]    
+) -> dict:
+    """Returns the status of a flight date including scheduled and actual times, progress, etc."""
+    try:
+        logger.info(f"get_airline_flight_date_status({flight_number}, {departure_date})")
+        results = flifo.get_airline_flight_date_status(flight_number, departure_date)
+        logger.info(f"get_airline_flight_date_status({flight_number}, {departure_date})={results}")
+        return {"status": "success", "results": results}
+    except Exception as e:
+        logger.error(f"Error: get_airline_flight_date_status()", exc_info=True)
+        return {"status": "error", "error": str(e)}
+
+
 
 
 
