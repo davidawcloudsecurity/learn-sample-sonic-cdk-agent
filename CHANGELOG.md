@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adapt to an official version of the async clients for the [AWS SDK for Python](https://github.com/awslabs/aws-sdk-python/tree/develop) when the experimental one becomes official.
 - [developer experience] Easier custom tool extension (through some framework)
 
+## [0.1.4] - 2024-10-30 (hotfix)
+
+- Pinned AWS Smithy SDK dependencies to specific versions to prevent breaking changes from experimental 0.1.0 packages (`smithy-core==0.0.2`, `aws-sdk-signers==0.0.3`, `aws_sdk_bedrock_runtime==0.0.2`, `smithy-aws-core==0.0.3`, `smithy-http==0.0.1`, `smithy-json==0.0.1`, `smithy-aws-event-stream==0.0.1`)
+
+See https://github.com/aws-samples/sample-sonic-cdk-agent/pull/36 for PR and https://github.com/aws-samples/sample-sonic-cdk-agent/issues/34 for issue
+
 ## [0.1.3] - 2025-05-22
 
 - [developer experience] Tools are now defined using the popular Model Context Protocol (MCP) framework.
