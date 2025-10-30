@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adapt to an official version of the async clients for the [AWS SDK for Python](https://github.com/awslabs/aws-sdk-python/tree/develop) when the experimental one becomes official.
 - [developer experience] Easier custom tool extension (through some framework)
 
-## [0.1.4] - 2024-10-30 (hotfix)
+## [0.1.4] - 2024-10-23 (hotfix)
 
 - Pinned AWS Smithy SDK dependencies to specific versions to prevent breaking changes from experimental 0.1.0 packages (`smithy-core==0.0.2`, `aws-sdk-signers==0.0.3`, `aws_sdk_bedrock_runtime==0.0.2`, `smithy-aws-core==0.0.3`, `smithy-http==0.0.1`, `smithy-json==0.0.1`, `smithy-aws-event-stream==0.0.1`)
 
