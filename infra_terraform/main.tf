@@ -200,11 +200,24 @@ resource "aws_s3_bucket" "logs" {
   tags   = { Name = "${var.project_name}-logs" }
 }
 
+resource "aws_s3_bucket_ownership_controls" "logs" {
+  bucket = aws_s3_bucket.logs.id
+  rule {
+    object_ownership = "BucketOwnerPreferred"
+  }
+}
+
+resource "aws_s3_bucket_acl" "logs" {
+  bucket     = aws_s3_bucket.logs.id
+  acl        = "log-delivery-write"
+  depends_on = [aws_s3_bucket_ownership_controls.logs]
+}
+
 resource "aws_s3_bucket_public_access_block" "logs" {
   bucket                  = aws_s3_bucket.logs.id
-  block_public_acls       = true
+  block_public_acls       = false
   block_public_policy     = true
-  ignore_public_acls      = true
+  ignore_public_acls      = false
   restrict_public_buckets = true
 }
 
@@ -397,7 +410,7 @@ resource "aws_cognito_user_pool_client" "main" {
 }
 
 resource "aws_cognito_user_pool_domain" "main" {
-  domain       = var.cognito_domain_prefix
+  domain       = local.cognito_prefix
   user_pool_id = aws_cognito_user_pool.main.id
 }
 
